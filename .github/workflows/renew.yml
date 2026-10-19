@@ -2,7 +2,7 @@ name: Auto Renew Host-ship
 
 on:
   schedule:
-    - cron: '0 0 20 * *' # 每天UTC 7点（北京时间15点）巡检一次，周期按面板文案再调
+    - cron: '0 7 * * *' # 每天 UTC 7 点（北京时间 15 点）运行一次
   workflow_dispatch:
 
 jobs:
@@ -31,6 +31,7 @@ jobs:
           EMAIL: ${{ secrets.EMAIL }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          RENEW_THRESHOLD_DAYS: '10' # 剩余天数低于这个值才续期
         run: python3 app.py
 
       - name: 🧹 清理旧的工作流运行记录
